@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfMapControlBasedOnArcGIS", "WpfMapControlBasedOnArcGIS\WpfMapControlBasedOnArcGIS.csproj", "{D68EFFF6-B9E9-4979-8A09-8A237203F101}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapControl", "MapControl\MapControl.csproj", "{FA685424-3384-460A-8C3B-6315B8814682}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{DC8D41CA-C29B-45BA-9790-48C7E7B63A95}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D68EFFF6-B9E9-4979-8A09-8A237203F101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D68EFFF6-B9E9-4979-8A09-8A237203F101}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D68EFFF6-B9E9-4979-8A09-8A237203F101}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D68EFFF6-B9E9-4979-8A09-8A237203F101}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA685424-3384-460A-8C3B-6315B8814682}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA685424-3384-460A-8C3B-6315B8814682}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA685424-3384-460A-8C3B-6315B8814682}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA685424-3384-460A-8C3B-6315B8814682}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC8D41CA-C29B-45BA-9790-48C7E7B63A95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC8D41CA-C29B-45BA-9790-48C7E7B63A95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC8D41CA-C29B-45BA-9790-48C7E7B63A95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC8D41CA-C29B-45BA-9790-48C7E7B63A95}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

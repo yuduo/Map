@@ -1,0 +1,5 @@
+时间：2017-04-06 10:19:45,985 
+线程:[9] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：After parsing a value an unexpected character was encountered: ". Path 'TiledLayer.url', line 23, position 4.
+

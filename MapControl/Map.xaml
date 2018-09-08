@@ -1,0 +1,78 @@
+﻿<UserControl xmlns:component="clr-namespace:HongLi.MapControl.Component"  x:Class="HongLi.MapControl.Map"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HongLi.MapControl"
+             mc:Ignorable="d" 
+             xmlns:esrii="clr-namespace:Esri.ArcGISRuntime;assembly=Esri.ArcGISRuntime"
+             xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013" 
+             Name="MapCtrl"
+             xmlns:toolkit="clr-namespace:Esri.ArcGISRuntime.Toolkit.Controls;assembly=Esri.ArcGISRuntime.Toolkit"
+                          d:DesignHeight="300" d:DesignWidth="300" Loaded="Map_Loaded">
+    <UserControl.Resources>
+        <local:EnumeratorConverter x:Key="Enumerator" />
+        <HierarchicalDataTemplate 
+			DataType="{x:Type esri:Layer}" >
+            <Expander>
+                <Expander.Header>
+                    <CheckBox IsChecked="{Binding IsVisible}" >
+                        <TextBlock Text="{Binding DisplayName}" FontWeight="Bold" MaxWidth="250" 
+								   TextTrimming="CharacterEllipsis" >
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="Red" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding InitializationException}" Value="{x:Null}">
+                                            <Setter Property="TextBlock.Foreground" Value="Black" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </CheckBox>
+                </Expander.Header>
+                <StackPanel Margin="20,5,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="填充 : "/>
+                        <Slider Value="{Binding Opacity, Mode=TwoWay}" 
+							Maximum="1" Width="100" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                    <esri:Legend Layers="{Binding Converter={StaticResource Enumerator}}" 
+							ShowOnlyVisibleLayers="False" />
+                </StackPanel>
+            </Expander>
+        </HierarchicalDataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <esri:MapView x:Name="MapView" IsLogoVisible="False" MapViewTapped="MapView_MapViewTapped">
+            <esri:Map x:Name="MapObj">
+
+            </esri:Map>
+        </esri:MapView>
+        <Canvas Name="AnimationCav" IsHitTestVisible="False"></Canvas>
+        <toolkit:ScaleLine TargetWidth="200" Scale="{Binding ElementName=MapView, Path=Scale}"
+						   HorizontalAlignment="Right" VerticalAlignment="Bottom"
+						   Margin="10" />
+        
+            <Border Name="LayerCtrl" Visibility="Hidden"
+                Background="White" BorderBrush="Black" BorderThickness="1" Margin="30" Padding="10,20,20,20"
+                HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Border.Effect>
+                <DropShadowEffect />
+            </Border.Effect>
+            <TreeView ItemsSource="{Binding Map.Layers, ElementName=MapView}"
+					  HorizontalAlignment="Left" BorderBrush="Transparent"
+					  Width="300" HorizontalContentAlignment="Stretch"/>
+        </Border>
+        
+        <component:ToolBar  x:Name="toolBar" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"
+                            ToolActive="ToolBar_ToolActive" ToolDeActive="ToolBar_ToolDeActive"/>
+
+        <component:TrackPlayer x:Name="TrackCtrl" Visibility="Hidden" Margin="30"
+                                VerticalAlignment="Bottom" 
+                                HorizontalAlignment="Left"/>
+
+        
+    </Grid>
+</UserControl>

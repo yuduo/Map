@@ -1,0 +1,20 @@
+时间：2016-11-14 11:19:25,835 
+线程:[9] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：初始化地图...
+
+时间：2016-11-14 11:19:26,151 
+线程:[9] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：地图初始化完成
+
+时间：2016-11-14 18:04:55,673 
+线程:[9] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：初始化地图...
+
+时间：2016-11-14 18:04:55,984 
+线程:[9] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：地图初始化完成
+

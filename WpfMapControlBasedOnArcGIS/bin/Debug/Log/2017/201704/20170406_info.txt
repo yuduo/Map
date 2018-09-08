@@ -1,0 +1,75 @@
+时间：2017-04-06 10:18:32,677 
+线程:[9] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：初始化地图...
+
+时间：2017-04-06 10:19:46,035 
+线程:[9] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：初始化地图...
+
+时间：2017-04-06 10:19:46,076 
+线程:[9] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：地图初始化完成
+
+时间：2017-04-06 10:20:16,344 
+线程:[10] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：初始化地图...
+
+时间：2017-04-06 10:20:46,643 
+线程:[10] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：初始化地图...
+
+时间：2017-04-06 10:21:45,012 
+线程:[10] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：初始化地图...
+
+时间：2017-04-06 10:21:45,135 
+线程:[10] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：地图初始化完成
+
+时间：2017-04-06 10:22:01,024 
+线程:[10] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：初始化地图...
+
+时间：2017-04-06 10:22:01,026 
+线程:[10] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：地图初始化完成
+
+时间：2017-04-06 10:22:03,757 
+线程:[10] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：初始化地图...
+
+时间：2017-04-06 10:22:03,759 
+线程:[10] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：地图初始化完成
+
+时间：2017-04-06 10:22:05,206 
+线程:[10] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：初始化地图...
+
+时间：2017-04-06 10:22:05,208 
+线程:[10] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：地图初始化完成
+
+时间：2017-04-06 10:23:12,077 
+线程:[9] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：初始化地图...
+
+时间：2017-04-06 10:23:12,246 
+线程:[9] 
+对象：HongLi.MapControl.Map property: [(null)] - 
+信息：地图初始化完成
+
