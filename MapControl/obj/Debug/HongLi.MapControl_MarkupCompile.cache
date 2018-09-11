@@ -4,7 +4,7 @@
 library
 C#
 .cs
-E:\Test\code宏理地图-测距\code\MapControl\obj\Debug\
+E:\Map\MapControl\obj\Debug\
 HongLi.MapControl
 none
 false
@@ -13,7 +13,7 @@ DEBUG;TRACE
 61111259274
 
 30854724663
-18-1304082205
+18-820366220
 Component\Callout.xaml;Component\ToolBar.xaml;Component\ToolItem.xaml;Component\ToolTip.xaml;Component\TrackPlayer.xaml;Map.xaml;
 
 False

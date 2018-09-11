@@ -8,11 +8,14 @@ using HongLi.MapControl.Util;
 using HongLi.MapControl.Util.TrackSupport;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Xml;
 
 namespace HongLi.MapControl
 {
@@ -24,6 +27,37 @@ namespace HongLi.MapControl
         public static string TaskGuid = "FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC";
 
         private static bool _needInit = true;
+        [StructLayout(LayoutKind.Sequential)]
+        public struct rect_STRUCT
+        {
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
+
+            public char[] lon;
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
+
+            public char[] lan;
+        }
+        [StructLayout(LayoutKind.Sequential)]
+        public struct PointRectangle
+        {
+            /// <summary>
+            /// 左上
+            /// </summary>
+            /// 
+
+            public rect_STRUCT TopLeft;
+            /// <summary>
+            /// 右下
+            /// </summary>
+            /// 
+
+            public rect_STRUCT BottomRight;
+        }
+        [DllImport("User32.DLL")]
+        public static extern int SendMessage(int hWnd, int Msg, int wParam, IntPtr lParam);
+        private const int WM_USER = 0x400;
         //Timer timerMap;
         public Map()
         {
@@ -73,6 +107,9 @@ namespace HongLi.MapControl
             //timerMap.Interval = 60 * 1000;
             //timerMap.Elapsed += TimerMap_Elapsed;
             //timerMap.Start();
+
+            IntPtr windowHandle = Process.GetCurrentProcess().MainWindowHandle;
+            SendMessage((int)windowHandle, WM_USER + 58, 2, IntPtr.Zero);
         }
 
         private void TimerMap_Elapsed(object sender, ElapsedEventArgs e)
@@ -442,7 +479,51 @@ namespace HongLi.MapControl
             switch (tool)
             {
                 case "ToolLayer":
-                    LayerCtrl.Visibility = Visibility.Visible;
+                    //LayerCtrl.Visibility = Visibility.Visible;
+                    string xml = "<Document TaskGuid = \"FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC\" DataGuid = \"004\" DataType = \"ClearGraphic\">"
+                  + "<Target Type = \"TEXT\">Drawing</Target>"
+                  + "</Document>";
+                    SetData("TEST", "FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC", "", "ClearGraphic", xml);
+                    GetDataAsync("TEST", "FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC", "014", "DrawRectangle", (string x) =>
+                    {
+                        
+
+
+                        XmlDocument xmlDoc = new XmlDocument(); // Create an XML document object
+                        xmlDoc.LoadXml(x); // Load the XML document from the specified file
+                        List<string> lonList = new List<string>();
+                        List<string> lanList = new List<string>();
+                        // Get elements
+                        XmlNodeList elemList = xmlDoc.GetElementsByTagName("X");
+                        for (int i = 0; i < elemList.Count; i++)
+                        {
+                            // use node variable here for your beeds
+                            string lon = elemList[i].InnerXml;
+                            lonList.Add(lon);
+                        }
+                        elemList = xmlDoc.GetElementsByTagName("Y");
+                        for (int i = 0; i < elemList.Count; i++)
+                        {
+                            // use node variable here for your beeds
+                            string lan = elemList[i].InnerXml;
+                            lanList.Add(lan);
+                        }
+                        IntPtr windowHandle = Process.GetCurrentProcess().MainWindowHandle;
+                        PointRectangle pointrect;
+                        pointrect.TopLeft.lon =  lonList[0] .ToCharArray(0,16);
+                        pointrect.TopLeft.lan = lanList[0].ToCharArray(0, 16);
+                        pointrect.BottomRight.lon = lonList[2].ToCharArray(0, 16);
+                        pointrect.BottomRight.lan = lanList[2].ToCharArray(0, 16);
+
+                        // Initialize unmanged memory to hold the struct.
+                        IntPtr pnt = Marshal.AllocHGlobal(Marshal.SizeOf(pointrect));
+                        Marshal.StructureToPtr(pointrect, pnt, false);
+
+                        if (pnt != null)
+                        {
+                            SendMessage((int)windowHandle, WM_USER + 58, 7, pnt);
+                        }
+                    });
                     break;
                 case "ToolMeasureLength":
                     if (mapBehavior == null)

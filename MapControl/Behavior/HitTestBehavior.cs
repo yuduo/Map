@@ -6,7 +6,9 @@ using HongLi.MapControl.Util;
 using HongLi.MapControl.Util.TaskSupport;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Xml;
 
 namespace HongLi.MapControl.Behavior
@@ -21,7 +23,19 @@ namespace HongLi.MapControl.Behavior
         public GraphicsLayer Layer { get; set; }
 
         public Map MapObj { get; set; }
-
+        [StructLayout(LayoutKind.Sequential)]
+        public struct InfoStruct
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+            public char[] ID;
+            public InfoStruct(int id)
+            {
+                ID = new char[64];
+            }
+        }
+        [DllImport("User32.DLL")]
+        public static extern int SendMessage(int hWnd, int Msg, int wParam, IntPtr lParam);
+        private const int WM_USER = 0x400;
         public HitTestBehavior(string id, Map map, GraphicsLayer layer, Action<string> callback) : base(id, callback)
         {
             MapObj = map;
@@ -84,6 +98,20 @@ namespace HongLi.MapControl.Behavior
 
         private void ShowCallout(string title, string content, MapPoint location)
         {
+
+            IntPtr windowHandle = Process.GetCurrentProcess().MainWindowHandle;
+
+            InfoStruct info_struct = new InfoStruct(1);
+            info_struct.ID = string.Copy(title).ToCharArray();
+            Array.Resize(ref info_struct.ID, 64);
+            IntPtr pnt = Marshal.AllocHGlobal(Marshal.SizeOf(info_struct));
+            Marshal.StructureToPtr(info_struct, pnt, false);
+            if (windowHandle == IntPtr.Zero || pnt == IntPtr.Zero)
+            {
+                return;
+            }
+            SendMessage((int)windowHandle, WM_USER + 58, 8, pnt);
+            return;
             var c = new Callout
             {
                 CalloutTitle = title,

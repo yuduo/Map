@@ -175,7 +175,9 @@ namespace HongLi.MapControl.Util
                     case "GetMapView":
                         new GetMapViewBehavior(args.DataGuid, callback).Work(_map.MapView.Extent);
                         break;
-
+                    case "DrawRectangle":
+                        new MapDrawBehavior(_map, args.DataType, args.DataGuid, callback).Work(DrawShape.Rectangle);
+                        break;
                 }
 
                 return "";

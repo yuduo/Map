@@ -57,6 +57,10 @@ namespace HongLi.MapControl.Behavior
                 case DrawShape.Envelope:
                     break;
                 case DrawShape.Rectangle:
+                    symbol = new SimpleLineSymbol();
+                    ((SimpleLineSymbol)symbol).Color = System.Windows.Media.Colors.Blue;
+                    ((SimpleLineSymbol)symbol).Style = SimpleLineStyle.Dash;
+                    ((SimpleLineSymbol)symbol).Width = 2;
                     break;
                 case DrawShape.Freehand:
                     break;
