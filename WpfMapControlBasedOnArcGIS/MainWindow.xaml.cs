@@ -41,9 +41,9 @@ namespace WpfMapControlBasedOnArcGIS
             Map.Init(AppDomain.CurrentDomain.BaseDirectory + "/map.json");
             Map.InitMap();
 
-            timer.Interval = 30 * 1000;
-            timer.Elapsed += Timer_Elapsed;
-            timer.Start();
+            //timer.Interval = 30 * 1000;
+            //timer.Elapsed += Timer_Elapsed;
+            //timer.Start();
         }
 
         delegate void DelegateHandler();

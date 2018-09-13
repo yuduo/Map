@@ -146,14 +146,14 @@ namespace HongLi.MapControl.Behavior
         private void addTextSymbol(string text, MapPoint mp)
         {
             TextSymbol textSymbol = new TextSymbol();
-            textSymbol.Text = text;
+            textSymbol.Text = text+"\n"+mp.X.ToString("R")+"\n"+mp.Y.ToString("R");
             SymbolFont font = new SymbolFont();
             font.FontSize = 16;
             textSymbol.Font = font;
             textSymbol.BorderLineColor = System.Windows.Media.Colors.White;
             textSymbol.BorderLineSize = 1;
             textSymbol.XOffset = 10;
-            textSymbol.Color = System.Windows.Media.Colors.Orange;
+            textSymbol.Color = System.Windows.Media.Colors.Blue;
             Graphic graphicText = new Graphic
             {
                 Geometry = mp,

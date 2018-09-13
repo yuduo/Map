@@ -98,7 +98,17 @@ namespace HongLi.MapControl
             _needInit = false;
             return true;
         }
-
+        public void ClickItem(string lon, string lan)
+        {
+            string xml = "<Document TaskGuid = \"FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC\" DataGuid = \"001\" DataType = \"SetExtent\">"
+                + "<LON Type = \"SINGLE\">"+lon+"</LON>"
+                + "<LAT Type = \"SINGLE\" >"+lan+"</LAT>"
+                + "<Level Type = \"LONG\" ></Level></Document>";
+            SetDataAsync("TEST", "FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC", "", "SetExtent", xml, (string x) =>
+            {
+                //MessageBox.Show(x.ToString());
+            });
+        }
         private void Map_Loaded(object sender, RoutedEventArgs e)
         {
             TrackCtrl.SetMap(this);
@@ -239,16 +249,26 @@ namespace HongLi.MapControl
             switch (target)
             {
                 case "Highlight":
+                    //if (gra.Geometry is MapPoint)
+                    //{
+                    //    SimpleMarkerSymbol s = new SimpleMarkerSymbol
+                    //    {
+                    //        Color = Color.FromArgb(0, 0, 0, 0),
+                    //        Size = 20,
+                    //        Outline =
+                    //            new SimpleLineSymbol { Color = Colors.Red, Style = SimpleLineStyle.Solid, Width = 3 }
+                    //    };
+                    //    gra.Symbol = s;
+                    //}
                     if (gra.Geometry is MapPoint)
                     {
-                        SimpleMarkerSymbol s = new SimpleMarkerSymbol
+                        var bytes = param as byte[];
+                        if (bytes != null)
                         {
-                            Color = Color.FromArgb(0, 0, 0, 0),
-                            Size = 20,
-                            Outline =
-                                new SimpleLineSymbol { Color = Colors.Red, Style = SimpleLineStyle.Solid, Width = 3 }
-                        };
-                        gra.Symbol = s;
+                            var ps = new PictureMarkerSymbol();
+                            ps.SetSource(bytes);
+                            gra.Symbol = ps;
+                        }
                     }
                     _highLightLayer.Graphics.Add(gra);
                     break;
@@ -438,6 +458,10 @@ namespace HongLi.MapControl
         {
             if (_behaviors == null)
             {
+                string xml = "<Document TaskGuid = \"FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC\" DataGuid = \"004\" DataType = \"ClearGraphic\">"
+                  + "<Target Type = \"TEXT\">Drawing</Target>"
+                  + "</Document>";
+                SetData("TEST", "FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC", "", "ClearGraphic", xml);
                 return;
             }
             foreach (var b in _behaviors)
@@ -467,6 +491,17 @@ namespace HongLi.MapControl
             }
 
         }
+        // <summary>
+        /// 
+        /// </summary>
+        /// <param name="strCh"></param>
+        /// <param name="chArry"></param>
+        private void ChangeStringToChar(string strCh, out char[] chArry)
+        {
+            chArry = new char[16];
+            char[] chTmp = strCh.ToCharArray();
+            Array.Copy(chTmp, chArry, chTmp.Length > 16 ? 16 : chTmp.Length);
+        }
 
         //测量行为
         MapMeasureBehavior mapBehavior;
@@ -476,17 +511,18 @@ namespace HongLi.MapControl
         /// <param name="tool"></param>
         private void ToolBar_ToolActive(string tool)
         {
+            string xml = "<Document TaskGuid = \"FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC\" DataGuid = \"004\" DataType = \"ClearGraphic\">"
+                  + "<Target Type = \"TEXT\">Drawing</Target>"
+                  + "</Document>";
+            SetData("TEST", "FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC", "", "ClearGraphic", xml);
             switch (tool)
             {
                 case "ToolLayer":
                     //LayerCtrl.Visibility = Visibility.Visible;
-                    string xml = "<Document TaskGuid = \"FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC\" DataGuid = \"004\" DataType = \"ClearGraphic\">"
-                  + "<Target Type = \"TEXT\">Drawing</Target>"
-                  + "</Document>";
-                    SetData("TEST", "FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC", "", "ClearGraphic", xml);
+                    
                     GetDataAsync("TEST", "FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC", "014", "DrawRectangle", (string x) =>
                     {
-                        
+                        toolBar.CancelToolItem("ToolLayer");
 
 
                         XmlDocument xmlDoc = new XmlDocument(); // Create an XML document object
@@ -509,11 +545,19 @@ namespace HongLi.MapControl
                             lanList.Add(lan);
                         }
                         IntPtr windowHandle = Process.GetCurrentProcess().MainWindowHandle;
-                        PointRectangle pointrect;
-                        pointrect.TopLeft.lon =  lonList[0] .ToCharArray(0,16);
-                        pointrect.TopLeft.lan = lanList[0].ToCharArray(0, 16);
-                        pointrect.BottomRight.lon = lonList[2].ToCharArray(0, 16);
-                        pointrect.BottomRight.lan = lanList[2].ToCharArray(0, 16);
+                        PointRectangle pointrect = new PointRectangle();
+
+
+                        if (lonList.Count > 2 && lanList.Count > 2)
+                        {
+                            ChangeStringToChar(lonList[0], out pointrect.TopLeft.lon);
+
+                            ChangeStringToChar(lanList[0], out pointrect.TopLeft.lan);
+
+                            ChangeStringToChar(lonList[2], out pointrect.BottomRight.lon);
+
+                            ChangeStringToChar(lanList[2], out pointrect.BottomRight.lan);
+                        }
 
                         // Initialize unmanged memory to hold the struct.
                         IntPtr pnt = Marshal.AllocHGlobal(Marshal.SizeOf(pointrect));
@@ -526,6 +570,7 @@ namespace HongLi.MapControl
                     });
                     break;
                 case "ToolMeasureLength":
+                    
                     if (mapBehavior == null)
                     {
                         mapBehavior = new MapMeasureBehavior(this, "016", (string s) =>
@@ -549,6 +594,7 @@ namespace HongLi.MapControl
             {
                 case "ToolLayer":
                     LayerCtrl.Visibility = Visibility.Hidden;
+                    
                     break;
                 case "ToolMeasureLength":
                     if (mapBehavior != null)

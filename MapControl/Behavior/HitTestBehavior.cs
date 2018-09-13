@@ -98,6 +98,14 @@ namespace HongLi.MapControl.Behavior
 
         private void ShowCallout(string title, string content, MapPoint location)
         {
+           
+            foreach (var item in MapObj.toolBar.Tools.Children.OfType<ToolItem>())
+            {
+
+                if (item.Active == true)
+                    return;
+                
+            }
 
             IntPtr windowHandle = Process.GetCurrentProcess().MainWindowHandle;
 
