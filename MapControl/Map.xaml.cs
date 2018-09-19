@@ -100,14 +100,27 @@ namespace HongLi.MapControl
         }
         public void ClickItem(string lon, string lan)
         {
-            string xml = "<Document TaskGuid = \"FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC\" DataGuid = \"001\" DataType = \"SetExtent\">"
-                + "<LON Type = \"SINGLE\">"+lon+"</LON>"
-                + "<LAT Type = \"SINGLE\" >"+lan+"</LAT>"
-                + "<Level Type = \"LONG\" ></Level></Document>";
-            SetDataAsync("TEST", "FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC", "", "SetExtent", xml, (string x) =>
+           
+           // foreach (Graphic gra in _highLightLayer.Graphics)
+            //foreach (Graphic gra in _drawingLayer.Graphics)
+                
             {
-                //MessageBox.Show(x.ToString());
-            });
+                //MapPoint point = gra.Geometry as MapPoint;
+                
+                //if (point.X.ToString() == lon && point.Y.ToString()==lan)
+
+                {
+                    string xml = "<Document TaskGuid = \"FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC\" DataGuid = \"001\" DataType = \"SetExtent\">"
+                   + "<LON Type = \"SINGLE\">" + lon + "</LON>"
+                   + "<LAT Type = \"SINGLE\" >" + lan + "</LAT>"
+                   + "<Level Type = \"LONG\" ></Level></Document>";
+                    SetDataAsync("TEST", "FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC", "", "SetExtent", xml, (string x) =>
+                    {
+                        //MessageBox.Show(x.ToString());
+                    });
+                }
+            }
+           
         }
         private void Map_Loaded(object sender, RoutedEventArgs e)
         {
@@ -456,6 +469,7 @@ namespace HongLi.MapControl
         /// <param name="e"></param>
         private void MapView_MapViewTapped(object sender, Esri.ArcGISRuntime.Controls.MapViewInputEventArgs e)
         {
+            
             if (_behaviors == null)
             {
                 string xml = "<Document TaskGuid = \"FF17D1B3-85C7-40F4-8CDC-73DC57CD29BC\" DataGuid = \"004\" DataType = \"ClearGraphic\">"
@@ -581,9 +595,14 @@ namespace HongLi.MapControl
                     mapBehavior.IsObsolete = false;
                     mapBehavior.Work("0");
                     break;
+                case "CenterLayer":
+                    {
+                        MapView.SetViewAsync(ConfigUtil.InitCenter, ConfigUtil.InitScale, new TimeSpan(1000));
+                    }
+                    break;
             }
         }
-
+       
         /// <summary>
         /// 工具栏取消激活事件
         /// </summary>

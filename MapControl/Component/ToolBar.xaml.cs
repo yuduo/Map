@@ -50,7 +50,11 @@ namespace HongLi.MapControl.Component
                 item.Active = false;
             }
         }
-
+        private void GoCenter_Click(object sender, RoutedEventArgs e)
+        {
+            ToolActive?.Invoke(((ToolItem)sender).Name);
+            CancelToolItem(((ToolItem)sender).Name);
+        }
         public void CancelToolItem(string itemName)
         {
             foreach (var item in Tools.Children.OfType<ToolItem>())
@@ -65,6 +69,11 @@ namespace HongLi.MapControl.Component
                     break;
                 }
             }
+        }
+
+        private void CenterLayer_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

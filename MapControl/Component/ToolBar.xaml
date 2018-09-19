@@ -26,6 +26,7 @@
                 <!--<local:ToolItem x:Name="tool_Ope" Icon="operate.png" Click="ToolItem_Click"/>-->
                 <local:ToolItem x:Name="ToolMeasureLength" Icon="length.png" Click="ToolItem_Click"/>
                 <local:ToolItem x:Name="ToolLayer" Icon="layer.png" Click="ToolItem_Click"/>
+                <local:ToolItem x:Name="CenterLayer" Icon="center1.png" Click="GoCenter_Click"/>
             </StackPanel>
         </Grid>
     </Grid>
