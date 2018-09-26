@@ -133,6 +133,8 @@ namespace HongLi.MapControl
 
             IntPtr windowHandle = Process.GetCurrentProcess().MainWindowHandle;
             SendMessage((int)windowHandle, WM_USER + 58, 2, IntPtr.Zero);
+
+            
         }
 
         private void TimerMap_Elapsed(object sender, ElapsedEventArgs e)
@@ -211,7 +213,7 @@ namespace HongLi.MapControl
             MapObj.Layers.Add(_highLightLayer);
 
 
-            MapView.SetViewAsync(ConfigUtil.InitCenter, ConfigUtil.InitScale, new TimeSpan(1000));
+            MapView.SetViewAsync(ConfigUtil.InitCenter, ConfigUtil.InitScale, new TimeSpan(10000));
 
             LogUtil.Info(typeof(Map), "地图初始化完成");
         }
